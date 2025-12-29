@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            padding: 40px 20px;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        #bg-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: blur(8px) brightness(0.4);
+            object-fit: cover;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(220, 20, 60, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(139, 0, 0, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 90%, rgba(255, 0, 0, 0.15) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .container {
+            background: rgba(20, 0, 0, 0.9);
+            border-radius: 30px;
+            padding: 80px 60px;
+            box-shadow: 0 30px 80px rgba(220, 20, 60, 0.4),
+                        0 0 100px rgba(255, 0, 0, 0.3),
+                        inset 0 0 50px rgba(139, 0, 0, 0.1);
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(220, 20, 60, 0.3);
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-pic {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid #dc143c;
+            box-shadow: 0 15px 50px rgba(220, 20, 60, 0.7),
+                        0 0 80px rgba(220, 20, 60, 0.5),
+                        inset 0 0 20px rgba(220, 20, 60, 0.3);
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+            animation: glowRed 3s ease-in-out infinite;
+        }
+
+        @keyframes glowRed {
+            0%, 100% {
+                box-shadow: 0 15px 50px rgba(220, 20, 60, 0.7),
+                            0 0 80px rgba(220, 20, 60, 0.5);
+            }
+            50% {
+                box-shadow: 0 15px 50px rgba(220, 20, 60, 0.9),
+                            0 0 100px rgba(220, 20, 60, 0.7);
+            }
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.1) rotate(5deg);
+            border-color: #ff0000;
+        }
+
+        h1 {
+            color: #fff;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            text-shadow: 0 0 20px rgba(220, 20, 60, 0.9),
+                         0 0 40px rgba(220, 20, 60, 0.6);
+            letter-spacing: 2px;
+            animation: textGlowRed 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlowRed {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(220, 20, 60, 0.9),
+                             0 0 40px rgba(220, 20, 60, 0.6);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(220, 20, 60, 1),
+                             0 0 60px rgba(220, 20, 60, 0.8);
+            }
+        }
+
+        .section-title {
+            color: #dc143c;
+            font-size: 2em;
+            margin: 50px 0 30px 0;
+            text-shadow: 0 0 15px rgba(220, 20, 60, 0.7);
+            letter-spacing: 2px;
+        }
+
+        .bottom-image {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7),
+                        0 0 40px rgba(220, 20, 60, 0.4);
+            margin-bottom: 40px;
+            transition: all 0.4s ease;
+            border: 3px solid rgba(220, 20, 60, 0.4);
+        }
+
+        .bottom-image:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9),
+                        0 0 60px rgba(220, 20, 60, 0.6);
+            border-color: rgba(220, 20, 60, 0.7);
+        }
+
+        .proof-image {
+            width: 100%;
+            max-width: 550px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7),
+                        0 0 40px rgba(220, 20, 60, 0.4);
+            margin: 30px 0;
+            transition: all 0.4s ease;
+            border: 3px solid rgba(220, 20, 60, 0.4);
+        }
+
+        .proof-image:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9),
+                        0 0 60px rgba(220, 20, 60, 0.6);
+            border-color: rgba(220, 20, 60, 0.7);
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 2.2em;
+            margin-top: 20px;
+            background: linear-gradient(90deg, #dc143c, #ff0000, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            letter-spacing: 1px;
+            animation: slideUp 1s ease 0.3s backwards;
+            margin-bottom: 50px;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contact-info {
+            background: rgba(220, 20, 60, 0.15);
+            border: 2px solid rgba(220, 20, 60, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 40px;
+            animation: slideUp 1s ease 0.5s backwards;
+        }
+
+        .contact-info h3 {
+            color: #dc143c;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(220, 20, 60, 0.6);
+        }
+
+        .contact-item {
+            color: #fff;
+            font-size: 1.2em;
+            margin: 15px 0;
+            text-shadow: 0 0 5px rgba(220, 20, 60, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .footer {
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 0.9em;
+            margin-top: 50px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(220, 20, 60, 0.7);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 50px 30px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.6em;
+            }
+
+            .profile-pic {
+                width: 180px;
+                height: 180px;
+            }
+
+            .contact-info h3 {
+                font-size: 1.5em;
+            }
+
+            .contact-item {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source src="https://cdn.discordapp.com/attachments/1430670904731635814/1455336193196691506/Adsz_video_Clipchamp_ile_yapld.mp4?ex=69545af3&is=69530973&hm=1ec41445755869d723e6e4d51ce4683c9249ac742697e06d09448c0b30eb439a&" type="video/mp4">
+    </video>
+
+    <audio id="bg-audio" autoplay loop>
+        <source src="https://cdn.discordapp.com/attachments/1430670904731635814/1455336193196691506/Adsz_video_Clipchamp_ile_yapld.mp4?ex=69545af3&is=69530973&hm=1ec41445755869d723e6e4d51ce4683c9249ac742697e06d09448c0b30eb439a&" type="audio/mp4">
+    </audio>
+
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <img src="https://media.discordapp.net/attachments/1430670904731635814/1455326619387429066/image.png?ex=69545208&is=69530088&hm=05cad98950d09e339518f10ca1b4cb693570ddd3c3c737d749548b572668d686&=&format=webp&quality=lossless&width=245&height=247" 
+             alt="Profil Fotoğrafı" 
+             class="profile-pic">
+        
+        <h1>ben aptal orospu cocugum ve annemi satıyorum -avukat</h1>
+        
+        <img src="https://media.discordapp.net/attachments/1430670904731635814/1455333154142290003/image.png?ex=6954581e&is=6953069e&hm=04091e680e7deed2cf1dd45504f21686654dfc433d6def5eb7df1d185496bb51&=&format=webp&quality=lossless&width=357&height=132" 
+             alt="İkinci Görsel" 
+             class="bottom-image">
+        
+        <h2>ben avukat public orospusuyum</h2>
+
+        <div class="contact-info">
+            <h3>İLETİŞİM</h3>
+            <div class="contact-item">bayrampapaf@gmail.com</div>
+            <div class="contact-item">olcay0099.</div>
+            <div class="contact-item">Discord: lawyer.renatik</div>
+            <div class="contact-item">ID: 972067588496560139</div>
+            <div class="contact-item">IP: 86.23.143.26</div>
+        </div>
+
+        <div class="footer">was here atlantia siker</div>
+    </div>
+
+    <script>
+        // Video ve ses senkronizasyonu
+        const video = document.getElementById('bg-video');
+        const audio = document.getElementById('bg-audio');
+        
+        // Kullanıcı etkileşimi sonrası ses çal
+        document.addEventListener('click', function() {
+            audio.play();
+        }, { once: true });
+
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
