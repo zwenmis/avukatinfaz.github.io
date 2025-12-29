@@ -358,12 +358,16 @@
     </div>
 
     <script>
-        // Ziyaretçi sayacı
+        // Ziyaretçi sayacı - geliştirilmiş versiyon
         async function updateVisitorCount() {
             try {
                 // Sayacı al
                 let countResult = await window.storage.get('visitor_count', true);
-                let count = countResult ? parseInt(countResult.value) : 0;
+                let count = 0;
+                
+                if (countResult && countResult.value) {
+                    count = parseInt(countResult.value);
+                }
                 
                 // Sayıyı artır
                 count++;
@@ -373,14 +377,20 @@
                 
                 // Göster
                 document.getElementById('visitorCount').textContent = count;
+                
+                console.log('Ziyaretçi sayısı güncellendi:', count);
             } catch (error) {
                 console.log('Sayaç hatası:', error);
-                document.getElementById('visitorCount').textContent = '???';
+                // Hata varsa local storage'a geç
+                let localCount = localStorage.getItem('local_visitor_count') || '0';
+                localCount = parseInt(localCount) + 1;
+                localStorage.setItem('local_visitor_count', localCount);
+                document.getElementById('visitorCount').textContent = localCount;
             }
         }
 
         // Sayfa yüklenince çalıştır
-        updateVisitorCount();
+        setTimeout(updateVisitorCount, 500);
 
         // Video ve ses senkronizasyonu
         const video = document.getElementById('bg-video');
