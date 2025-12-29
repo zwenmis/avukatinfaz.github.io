@@ -235,6 +235,21 @@
             letter-spacing: 1px;
         }
 
+        .visitor-counter {
+            color: #dc143c;
+            font-size: 1.1em;
+            margin-top: 30px;
+            text-shadow: 0 0 10px rgba(220, 20, 60, 0.6);
+            letter-spacing: 1px;
+        }
+
+        .visitor-number {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #ff0000;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+        }
+
         .particles {
             position: fixed;
             width: 100%;
@@ -335,10 +350,38 @@
             <div class="contact-item">IP: 86.23.143.26</div>
         </div>
 
+        <div class="visitor-counter">
+            Toplam Ziyaretçi: <span class="visitor-number" id="visitorCount">0</span>
+        </div>
+
         <div class="footer">was here atlantia siker</div>
     </div>
 
     <script>
+        // Ziyaretçi sayacı
+        async function updateVisitorCount() {
+            try {
+                // Sayacı al
+                let countResult = await window.storage.get('visitor_count', true);
+                let count = countResult ? parseInt(countResult.value) : 0;
+                
+                // Sayıyı artır
+                count++;
+                
+                // Kaydet
+                await window.storage.set('visitor_count', count.toString(), true);
+                
+                // Göster
+                document.getElementById('visitorCount').textContent = count;
+            } catch (error) {
+                console.log('Sayaç hatası:', error);
+                document.getElementById('visitorCount').textContent = '???';
+            }
+        }
+
+        // Sayfa yüklenince çalıştır
+        updateVisitorCount();
+
         // Video ve ses senkronizasyonu
         const video = document.getElementById('bg-video');
         const audio = document.getElementById('bg-audio');
